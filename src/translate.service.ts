@@ -391,6 +391,7 @@ export class TranslateService {
         if(this.pending) {
             return Observable.create((observer: Observer<string>) => {
                 let onComplete = (res: string) => {
+                    res = this.compiler.compileTranslations(res, this.currentLang);
                     observer.next(res);
                     observer.complete();
                 };
@@ -398,7 +399,7 @@ export class TranslateService {
                     observer.error(err);
                 };
                 this.loadingTranslations.subscribe((res: any) => {
-                    res = this.getParsedResult(this.compiler.compileTranslations(res, this.currentLang), key, interpolateParams);
+                    res = this.getParsedResult(res, key, interpolateParams);
                     if(typeof res.subscribe === "function") {
                         res.subscribe(onComplete, onError);
                     } else {
