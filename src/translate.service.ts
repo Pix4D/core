@@ -391,6 +391,7 @@ export class TranslateService {
         if(this.pending) {
             return Observable.create((observer: Observer<string>) => {
                 let onComplete = (res: string) => {
+                    res = this.compiler.compileTranslations(res, this.currentLang);
                     observer.next(res);
                     observer.complete();
                 };
