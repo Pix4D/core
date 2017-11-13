@@ -369,6 +369,7 @@ var TranslateService = (function () {
         if (this.pending) {
             return Observable.create(function (observer) {
                 var onComplete = function (res) {
+                    res = _this.compiler.compileTranslations(res, _this.currentLang);
                     observer.next(res);
                     observer.complete();
                 };
